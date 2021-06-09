@@ -1,12 +1,18 @@
 package com.caniksoft.canikalarm;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
+import com.caniksoft.canikalarm.ui.alarm.AlarmFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
@@ -29,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
+                R.id.navigation_alarm, R.id.navigation_chronometer, R.id.navigation_timing)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
@@ -40,4 +46,26 @@ public class MainActivity extends AppCompatActivity {
         DBHelper.get(this);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.action_refresh:
+                NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().getFragments().get(0);
+                Fragment currentFragment = navHostFragment.getChildFragmentManager().getFragments().get(0);
+                if (currentFragment instanceof AlarmFragment) {
+                    ((AlarmFragment)currentFragment).refresh();
+                }
+
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }

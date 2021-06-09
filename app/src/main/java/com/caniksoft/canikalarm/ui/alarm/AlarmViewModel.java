@@ -21,6 +21,14 @@ public class AlarmViewModel extends ViewModel {
 
     AlarmEntity sabahNamaziAlarm = new AlarmEntity("Sabah Namazı", 5, 0, new Boolean[] {true, true, true, true, true, true, true});
 
+    public AlarmViewModel() {
+        super();
+        getAlarmList();
+        List<AlarmEntity> alarmEntityList = new ArrayList<>();
+        alarmEntityList.add(sabahNamaziAlarm);
+        alarmList.setValue(alarmEntityList);
+    }
+
     LiveData<List<AlarmEntity>> getAlarmList() {
         if (alarmList == null) {
             alarmList = new MutableLiveData<>();
@@ -34,6 +42,10 @@ public class AlarmViewModel extends ViewModel {
         Handler myHandler = new Handler();
         myHandler.postDelayed(() -> {
             List<AlarmEntity> alarmEntityList = DBHelper.get().getAlarmList();
+
+            if (alarmEntityList.isEmpty()) {
+                alarmEntityList.add(sabahNamaziAlarm);
+            }
             long seed = System.nanoTime();
             Collections.shuffle(alarmEntityList, new Random(seed));
 

@@ -23,14 +23,10 @@ public class AlarmFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        alarmViewModel =
-                new ViewModelProvider(this).get(AlarmViewModel.class);
-
         binding = FragmentAlarmBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textAlarm;
-        alarmViewModel.getText().observe(getViewLifecycleOwner(), alarmEntity -> textView.setText("alarmEntity.getName()"));
+        refresh();
         return root;
     }
 
@@ -38,5 +34,13 @@ public class AlarmFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    public void refresh() {
+        alarmViewModel = new ViewModelProvider(this).get(AlarmViewModel.class);
+        final TextView textView = binding.textAlarm;
+        if (alarmViewModel.getText() != null) {
+            alarmViewModel.getText().observe(getViewLifecycleOwner(), alarmEntity -> textView.setText("alarmEntity.getName()"));
+        }
     }
 }

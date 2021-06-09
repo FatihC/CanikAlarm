@@ -3,22 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@id/navigation_alarm">
 
     <fragment
-        android:id="@+id/navigation_home"
+        android:id="@+id/navigation_alarm"
         android:name="com.caniksoft.canikalarm.ui.alarm.AlarmFragment"
         android:label="@string/title_alarm"
         tools:layout="@layout/fragment_alarm" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigation_chronometer"
         android:name="com.caniksoft.canikalarm.ui.dashboard.ChronometerFragment"
         android:label="@string/title_chronometer"
         tools:layout="@layout/fragment_chronometer" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_timing"
         android:name="com.caniksoft.canikalarm.ui.notifications.TimingFragment"
         android:label="@string/title_timing"
         tools:layout="@layout/fragment_timing" />
